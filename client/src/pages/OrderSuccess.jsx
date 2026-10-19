@@ -35,15 +35,15 @@ export default function OrderSuccess() {
         doc.setFontSize(18);
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(30, 80, 200);
-        doc.text('Shree Ganesha Enterprises', pageW / 2, y, { align: 'center' });
+        doc.text('Siddhesh Telecome Services', pageW / 2, y, { align: 'center' });
 
         y += 7;
         doc.setFontSize(9);
         doc.setFont('helvetica', 'normal');
         doc.setTextColor(60, 60, 60);
-        doc.text('Bus Stop, Bazar Road, Mandhal, Ta. Kuhi, Dist Nagpur', pageW / 2, y, { align: 'center' });
+        doc.text('Lavthalswar, Oppo. Anandi Hospital, Jejuri, Tal-Purandhar, Dist-Pune', pageW / 2, y, { align: 'center' });
         y += 5;
-        doc.text('Ph: 9766009758 / 9511802794', pageW / 2, y, { align: 'center' });
+        doc.text('Ph: 9822521992 / 9923777771', pageW / 2, y, { align: 'center' });
         y += 5;
         doc.text('GST No: 27XXXXX1234Z5', pageW / 2, y, { align: 'center' });
 
@@ -190,7 +190,7 @@ export default function OrderSuccess() {
         doc.line(14, footerY + 14, 65, footerY + 14);
 
         doc.setFont('helvetica', 'bold');
-        doc.text('For: Shree Ganesha Enterprises', rightX, footerY + 12, { align: 'right' });
+        doc.text('For: Siddhesh Telecome Services', rightX, footerY + 12, { align: 'right' });
         doc.line(rightX - 55, footerY + 14, rightX, footerY + 14);
 
         doc.setFont('helvetica', 'normal');
@@ -228,7 +228,7 @@ export default function OrderSuccess() {
                     <CheckCircle className="w-16 h-16 mx-auto mb-3" />
                     <h1 className="text-2xl font-bold">Order Successfully Placed!</h1>
                     <p className="opacity-90 mt-2 text-sm">
-                        Thank you for shopping at Shree-Ganesha Enterprises. Your order is confirmed.
+                        Thank you for shopping at Siddhesh Telecome Services. Your order is confirmed.
                     </p>
                 </div>
 

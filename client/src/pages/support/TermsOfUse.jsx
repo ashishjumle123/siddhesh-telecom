@@ -7,7 +7,7 @@ export default function TermsOfUse() {
                 <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8 border-b pb-4">Terms of Use</h1>
 
                 <div className="space-y-8 text-gray-700 leading-relaxed text-sm lg:text-base">
-                    <p>Welcome to Shree-Ganesha Enterprises. By continuing to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use.</p>
+                    <p>Welcome to Siddhesh Telecome Services. By continuing to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use.</p>
 
                     <section>
                         <h2 className="text-xl font-semibold text-gray-800 mb-3">1. Account Security & User Responsibilities</h2>
@@ -31,7 +31,7 @@ export default function TermsOfUse() {
 
                     <section>
                         <h2 className="text-xl font-semibold text-gray-800 mb-3">3. Intellectual Property</h2>
-                        <p>All content included on this site—such as text, graphics, logos, button icons, images, audio clips, digital downloads, data compilations, and overall software—is the intellectual property of Shree-Ganesha Enterprises or its authorized content suppliers. It is protected by applicable national and international copyright laws.</p>
+                        <p>All content included on this site—such as text, graphics, logos, button icons, images, audio clips, digital downloads, data compilations, and overall software—is the intellectual property of Siddhesh Telecome Services or its authorized content suppliers. It is protected by applicable national and international copyright laws.</p>
                     </section>
 
                     <section>
@@ -42,7 +42,7 @@ export default function TermsOfUse() {
                     <section className="bg-gray-50 p-6 rounded-lg mt-6">
                         <h2 className="text-xl font-semibold text-gray-800 mb-3">5. Limitation of Liability</h2>
                         <p>
-                            In no event shall Shree-Ganesha Enterprises, its owner, employees, or retail partners be liable for any indirect, punitive, incidental, special, or consequential damages arising out of or in any way connected with the use of this website or the delay/inability to use this website. This limitation applies whether based on contract, tort, strict liability, or otherwise.
+                            In no event shall Siddhesh Telecome Services, its owner, employees, or retail partners be liable for any indirect, punitive, incidental, special, or consequential damages arising out of or in any way connected with the use of this website or the delay/inability to use this website. This limitation applies whether based on contract, tort, strict liability, or otherwise.
                         </p>
                     </section>
                 </div>

@@ -42,7 +42,7 @@ export default function Payments() {
                             </div>
                             <div>
                                 <h2 className="text-xl font-semibold text-gray-800 mb-2">Payment Security</h2>
-                                <p>We take your privacy seriously. All payments are securely routed and processed through heavily encrypted payment gateways (Razorpay). Shree-Ganesha Enterprises does not intercept, read, or store your raw credit card data or banking passcodes at any point during checkout.</p>
+                                <p>We take your privacy seriously. All payments are securely routed and processed through heavily encrypted payment gateways (Razorpay). Siddhesh Telecome Services does not intercept, read, or store your raw credit card data or banking passcodes at any point during checkout.</p>
                             </div>
                         </div>
                     </section>

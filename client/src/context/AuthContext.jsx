@@ -1,4 +1,4 @@
-﻿import { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 import BASE_URL from '../api';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -8,37 +8,40 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-    const [token, setToken] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [token, setToken] = useState(() => localStorage.getItem('token'));
+    const [user, setUser] = useState(() => {
+        try {
+            const stored = localStorage.getItem('user');
+            return stored ? JSON.parse(stored) : null;
+        } catch (e) {
+            return null;
+        }
+    });
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
-        const storedUser = localStorage.getItem('user');
+        if (!storedToken) return;
 
-        if (storedToken && storedUser) {
-            // Validate token against backend before trusting it
-            fetch(`${BASE_URL}/api/auth/profile`, {
-                headers: { 'Authorization': `Bearer ${storedToken}` }
-            }).then(res => {
-                if (res.ok) {
-                    setToken(storedToken);
-                    setUser(JSON.parse(storedUser));
-                } else {
-                    // Invalid/expired token — clear it so user is forced to log in fresh
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('user');
-                }
-            }).catch(() => {
-                // Network error — still trust the stored token so the app is usable offline
-                setToken(storedToken);
-                setUser(JSON.parse(storedUser));
-            }).finally(() => {
-                setLoading(false);
-            });
-        } else {
-            setLoading(false);
-        }
+        // Verify token in the background silently without blocking the UI
+        fetch(`${BASE_URL}/api/auth/profile`, {
+            headers: { 'Authorization': `Bearer ${storedToken}` }
+        }).then(async res => {
+            if (res.ok) {
+                const profile = await res.json();
+                const freshUser = { _id: profile.id || profile._id, name: profile.name, email: profile.email, role: profile.role };
+                setUser(freshUser);
+                localStorage.setItem('user', JSON.stringify(freshUser));
+            } else if (res.status === 401) {
+                // Only clear if server explicitly told us the token is invalid
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                setUser(null);
+                setToken(null);
+            }
+        }).catch(() => {
+            // Network failure - trust localStorage cache to keep store offline/fast
+        });
     }, []);
 
     const login = async (email, password) => {
@@ -69,12 +72,12 @@ export const AuthProvider = ({ children }) => {
     // Step 1 of OTP Flow
     const sendOtp = async (email) => {
         try {
-            await axios.post(`${BASE_URL}/api/auth/send-otp`, { email });
-            toast.success('Verification code sent to your email!');
-            return true;
+            const res = await axios.post(`${BASE_URL}/api/auth/send-otp`, { email });
+            toast.success(res.data?.message || 'Verification code sent to your email!');
+            return { success: true, devOtp: res.data?.devOtp };
         } catch (err) {
             toast.error(err.response?.data?.message || 'Failed to send OTP. Please try again.');
-            return false;
+            return { success: false };
         }
     };
 
@@ -94,7 +97,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('user', JSON.stringify(userPayload));
             localStorage.setItem('token', data.token);
 
-            toast.success('Email verified successfully! Welcome to Shree Ganesha Enterprises.');
+            toast.success('Email verified successfully! Welcome to Siddhesh Telecome Services.');
             return true;
         } catch (err) {
             toast.error(err.response?.data?.message || 'Invalid or expired OTP.');
@@ -118,7 +121,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('user', JSON.stringify(userPayload));
             localStorage.setItem('token', data.token);
 
-            toast.success('Registration successful! Welcome to Shree Ganesha Enterprises.');
+            toast.success('Registration successful! Welcome to Siddhesh Telecome Services.');
             return true;
 
         } catch (err) {

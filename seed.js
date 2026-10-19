@@ -1,3 +1,5 @@
+const dns = require('dns');
+try { dns.setServers(['8.8.8.8', '1.1.1.1']); } catch (e) {}
 require('dotenv').config();
 const mongoose = require('mongoose');
 const Product = require('./server/models/Product');
@@ -7,6 +9,7 @@ const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/shree_gane
 const dummyProducts = [
     {
         title: "Samsung 55-inch Crystal 4K UHD Smart TV",
+        brand: "Samsung",
         description: "Experience crystal clear picture quality with this Samsung 4K Smart TV. Features include HDR, Tizen OS, and multiple voice assistants.",
         price: 45000,
         deliveryFee: 500,
@@ -21,6 +24,7 @@ const dummyProducts = [
     },
     {
         title: "LG 260 L 3 Star Frost Free Double Door Refrigerator",
+        brand: "LG",
         description: "Keep your food fresh longer with this energy-efficient LG refrigerator. Features Smart Inverter Compressor and Multi Air Flow cooling.",
         price: 26500,
         deliveryFee: 1000,
@@ -35,6 +39,7 @@ const dummyProducts = [
     },
     {
         title: "Symphony Diet 12T Personal Tower Air Cooler",
+        brand: "Symphony",
         description: "Beat the heat with this compact and efficient Symphony air cooler. Ideal for spot cooling in small rooms.",
         price: 5500,
         deliveryFee: 200,

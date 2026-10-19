@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import BASE_URL from '../api';
 import { ChevronLeft, ChevronRight, Trash2, Plus } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -19,7 +19,11 @@ export default function HeroBanner() {
     const fetchBanners = async () => {
         try {
             const res = await axios.get(`${BASE_URL}/api/banners`);
-            setBanners(res.data);
+            if (Array.isArray(res.data)) {
+                setBanners(res.data);
+            } else {
+                setBanners([]);
+            }
         } catch (error) {
             console.error("Failed to fetch banners");
             setBanners([]);
@@ -89,7 +93,7 @@ export default function HeroBanner() {
         }
     };
 
-    if (loading) return null;
+    if (loading || !Array.isArray(banners) || banners.length === 0) return null;
 
     return (
         <div className="relative w-full max-w-[1400px] mx-auto group mb-4 px-2 md:px-4 flex flex-col items-center">

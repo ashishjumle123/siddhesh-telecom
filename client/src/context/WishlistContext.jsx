@@ -1,4 +1,4 @@
-﻿import { createContext, useState, useEffect, useContext, useCallback } from 'react';
+import { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import BASE_URL from '../api';
 import { useAuth } from './AuthContext';
 import toast from 'react-hot-toast';
@@ -32,7 +32,11 @@ export const WishlistProvider = ({ children }) => {
             });
             if (res.ok) {
                 const data = await res.json();
-                setWishlistItems(data); // populated product objects
+                if (Array.isArray(data)) {
+                    setWishlistItems(data);
+                } else {
+                    setWishlistItems([]);
+                }
             }
         } catch (error) {
             console.error('Error fetching wishlist:', error);

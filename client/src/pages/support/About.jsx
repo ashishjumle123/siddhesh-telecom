@@ -4,13 +4,13 @@ export default function About() {
     return (
         <div className="bg-[#f1f3f6] min-h-screen py-8 md:py-12">
             <div className="max-w-[1000px] mx-auto bg-white p-6 md:p-10 rounded-lg shadow-sm border border-gray-100">
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8 border-b pb-4">About Shree-Ganesha Enterprises</h1>
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8 border-b pb-4">About Siddhesh Telecome Services</h1>
 
                 <div className="space-y-8 text-gray-700 leading-relaxed">
                     <section>
                         <h2 className="text-2xl font-semibold text-gray-800 mb-3">Introduction</h2>
                         <p>
-                            Welcome to <strong>Shree-Ganesha Enterprises</strong> (श्रीगणेश एंटरप्रायझेस). We are a premier online store dedicated to providing high-quality electronics, dependable home appliances, and elegant furniture to homes across India. Our goal is to bring convenience and quality directly to your doorstep.
+                            Welcome to <strong>Siddhesh Telecome Services</strong> (सिद्धेश टेलीकॉम सर्विसेज). We are a premier online store dedicated to providing high-quality telecommunications products and services to homes across India. Our goal is to bring convenience and quality directly to your doorstep.
                         </p>
                     </section>
 

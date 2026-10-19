@@ -42,7 +42,7 @@ export default function Shipping() {
 
                     <section>
                         <h2 className="text-xl font-semibold text-gray-800 mb-3">Delivery Locations</h2>
-                        <p>Shree-Ganesha Enterprises currently ships to addresses within India. We strive to cover all major pin codes, though delivery to remote or highly restricted areas may take additional time.</p>
+                        <p>Siddhesh Telecome Services currently ships to addresses within India. We strive to cover all major pin codes, though delivery to remote or highly restricted areas may take additional time.</p>
                     </section>
 
                     <section>

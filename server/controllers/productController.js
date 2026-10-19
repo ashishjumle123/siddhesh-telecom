@@ -60,8 +60,10 @@ const getProducts = async (req, res) => {
             }
         }
 
-        const totalProducts = await Product.countDocuments(query);
-        const products = await Product.find(query).skip(skip).limit(limitNum);
+        const [totalProducts, products] = await Promise.all([
+            Product.countDocuments(query),
+            Product.find(query).skip(skip).limit(limitNum).sort({ createdAt: -1 }).lean()
+        ]);
         const totalPages = Math.ceil(totalProducts / limitNum);
 
         const responseObj = {
@@ -121,7 +123,8 @@ const getProductRecommendations = async (req, res) => {
             _id: { $ne: product._id } // exclude current
         })
             .sort({ rating: -1, numReviews: -1 })
-            .limit(6);
+            .limit(6)
+            .lean();
 
         res.json(recommendations);
     } catch (error) {
@@ -151,7 +154,7 @@ const createProduct = async (req, res) => {
         return res.status(400).json({
             success: false,
             message: "Validation failed",
-            errors: validationResult.error.errors.map(err => ({
+            errors: (validationResult.error.issues || validationResult.error.errors || []).map(err => ({
                 field: err.path[0],
                 message: err.message
             }))

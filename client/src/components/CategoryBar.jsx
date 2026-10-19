@@ -24,11 +24,16 @@ export default function CategoryBar() {
             try {
                 setLoading(true);
                 const { data } = await axios.get(`${BASE_URL}/api/categories`);
-                if (data && data.length > 0) {
+                if (Array.isArray(data)) {
                     setCategories(data);
+                } else if (data && Array.isArray(data.categories)) {
+                    setCategories(data.categories);
+                } else {
+                    setCategories([]);
                 }
             } catch (error) {
                 console.error('Error fetching categories:', error);
+                setCategories([]);
             } finally {
                 setLoading(false);
             }
@@ -69,7 +74,7 @@ export default function CategoryBar() {
         );
     }
 
-    if (categories.length === 0) return null;
+    if (!Array.isArray(categories) || categories.length === 0) return null;
 
     return (
         <div className="bg-white shadow-sm border-b border-gray-100 mb-2 relative group w-full">

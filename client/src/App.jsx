@@ -10,6 +10,7 @@ import CategoryBar from './components/CategoryBar';
 import BottomNav from './components/BottomNav';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
+import FloatingWhatsApp from './components/FloatingWhatsApp';
 
 // Pages
 import Login from './pages/Login';
@@ -87,11 +88,13 @@ function App() {
 
                   {/* Admin Only Routes */}
                   <Route element={<AdminRoute />}>
+                    <Route path="/admin" element={<AdminDashboard />} />
                     <Route path="/admin/*" element={<AdminDashboard />} />
                   </Route>
                 </Routes>
               </main>
 
+              <FloatingWhatsApp />
               <BottomNav />
             </div>
             <Toaster

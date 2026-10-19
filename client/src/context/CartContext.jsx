@@ -44,13 +44,15 @@ export const CartProvider = ({ children }) => {
             });
             if (res.ok) {
                 const data = await res.json();
-                // DB cart items: { product: {...}, quantity: N }
-                // Normalize to flat shape: { ...productFields, quantity }
-                const normalized = data.map(item => ({
-                    ...item.product,
-                    quantity: item.quantity
-                }));
-                setCartItems(normalized);
+                if (Array.isArray(data)) {
+                    const normalized = data.map(item => ({
+                        ...(item.product || {}),
+                        quantity: item.quantity
+                    }));
+                    setCartItems(normalized);
+                } else {
+                    setCartItems([]);
+                }
             }
         } catch (err) {
             console.error('Failed to fetch cart:', err);

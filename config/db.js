@@ -1,8 +1,10 @@
+const dns = require('dns');
+try { dns.setServers(['8.8.8.8', '1.1.1.1']); } catch (e) {}
 const mongoose = require('mongoose');
 require('dotenv').config();
 
 // ─── Configuration ─────────────────────────────────────────────────────────
-const MONGO_URI = process.env.MONGO_URI;
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/shree_ganesha';
 const RETRY_DELAY = 5000;   // ms between reconnection attempts
 const MAX_RETRIES = 10;     // max retry attempts before giving up
 let retryCount = 0;
@@ -10,11 +12,10 @@ let isConnecting = false;  // Guard to prevent concurrent connect calls
 
 // ─── Connection Options ─────────────────────────────────────────────────────
 const MONGO_OPTIONS = {
-    maxPoolSize: 10,     // Max concurrent connections in pool
-    minPoolSize: 0,      // Serverless/Cloud friendly: don't keep idle connections warm
-    serverSelectionTimeoutMS: 10000,
+    maxPoolSize: 10,
+    serverSelectionTimeoutMS: 30000,
     socketTimeoutMS: 45000,
-    connectTimeoutMS: 10000,
+    connectTimeoutMS: 30000,
     heartbeatFrequencyMS: 10000,
     retryWrites: true,
     retryReads: true,

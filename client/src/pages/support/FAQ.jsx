@@ -24,7 +24,7 @@ const faqs = [
     },
     {
         question: "How can I contact customer support?",
-        answer: "You can reach us directly by calling +91 97660 09758 or +91 95118 02794. Alternatively, you can email us at support@shreeganesha.com or use the 'Contact Us' form available on our website."
+        answer: "You can reach us directly by calling +91 9822521992 or +91 9923777771. Alternatively, you can email us at sidheshtelecom2@gmail.com or use the 'Contact Us' form available on our website."
     }
 ];
 
@@ -40,7 +40,7 @@ export default function FAQ() {
             <div className="max-w-[1000px] mx-auto bg-white p-6 md:p-10 rounded-lg shadow-sm border border-gray-100">
                 <div className="text-center mb-10">
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2 border-b pb-4">Frequently Asked Questions</h1>
-                    <p className="text-gray-500 mt-4">Find answers to common questions about shopping with Shree-Ganesha Enterprises.</p>
+                    <p className="text-gray-500 mt-4">Find answers to common questions about shopping with Siddhesh Telecome Services.</p>
                 </div>
 
                 <div className="space-y-4 max-w-3xl mx-auto">

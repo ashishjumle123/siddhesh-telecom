@@ -17,7 +17,7 @@ export default function Cancellation() {
                     </section>
 
                     <section>
-                        <h2 className="text-xl font-semibold text-gray-800 mb-3">Order Cancellation by Shree-Ganesha Enterprises</h2>
+                        <h2 className="text-xl font-semibold text-gray-800 mb-3">Order Cancellation by Siddhesh Telecome Services</h2>
                         <p className="mb-2">There may be certain circumstances where we are forced to cancel an accepted order. These include:</p>
                         <ul className="list-disc list-inside space-y-2 ml-2">
                             <li>Non-availability of the product in our primary inventory.</li>

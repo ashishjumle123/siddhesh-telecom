@@ -84,7 +84,7 @@ const addOrderItems = async (req, res, next) => {
             subject: `Order Confirmed - ${createdOrder.orderId}`,
             html: `
                 <h2 style="color: #28a745;">Order Confirmed!</h2>
-                <p>Thank you for shopping with Shree-Ganesha Enterprises.</p>
+                <p>Thank you for shopping with Siddhesh Telecome Services.</p>
                 ${orderSummaryHtml}
             `,
             text: `Your order ${createdOrder.orderId} of ₹${createdOrder.totalPrice} is confirmed.`

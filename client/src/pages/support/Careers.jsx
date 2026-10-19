@@ -6,9 +6,9 @@ export default function Careers() {
         <div className="bg-[#f1f3f6] min-h-screen py-8 md:py-12">
             <div className="max-w-[1000px] mx-auto bg-white p-6 md:p-10 rounded-lg shadow-sm border border-gray-100">
                 <div className="text-center mb-10">
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2 border-b pb-4">Careers at Shree-Ganesha Enterprises</h1>
+                    <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2 border-b pb-4">Careers at Siddhesh Telecome Services</h1>
                     <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
-                        Shree-Ganesha Enterprises is a growing online retail platform specializing in electronics, home appliances, and furniture. We are always looking for talented individuals who want to grow their careers in the exciting e-commerce industry.
+                        Siddhesh Telecome Services is a growing retail platform specializing in telecommunications products and services. We are always looking for talented individuals who want to grow their careers in the exciting retail industry.
                     </p>
                 </div>
 
@@ -61,10 +61,10 @@ export default function Careers() {
                         <h2 className="text-2xl font-semibold mb-4">Ready to Join Our Journey?</h2>
                         <p className="mb-6 text-gray-300">Interested candidates can send their resume directly to our HR department.</p>
                         <a
-                            href="mailto:careers@shreeganesha.com"
+                            href="mailto:sidheshtelecom2@gmail.com"
                             className="inline-block bg-[#2874f0] hover:bg-blue-600 text-white px-8 py-3 rounded-md font-medium transition-colors"
                         >
-                            Email us: careers@shreeganesha.com
+                            Email us: sidheshtelecom2@gmail.com
                         </a>
                     </section>
                 </div>

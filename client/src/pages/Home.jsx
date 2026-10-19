@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import BASE_URL from '../api';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
@@ -27,7 +27,13 @@ export default function Home() {
 
                 const res = await axios.get(queryURL);
                 if (res.data) {
-                    setProducts(res.data.products || res.data);
+                    if (Array.isArray(res.data.products)) {
+                        setProducts(res.data.products);
+                    } else if (Array.isArray(res.data)) {
+                        setProducts(res.data);
+                    } else {
+                        setProducts([]);
+                    }
                 }
             } catch (error) {
                 console.error("Error fetching products:", error);

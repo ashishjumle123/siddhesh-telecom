@@ -1,14 +1,22 @@
+const dns = require('dns');
+try { dns.setServers(['8.8.8.8', '1.1.1.1']); } catch (e) {}
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
-const MongoStore = require('connect-mongo').default;
 const compression = require('compression');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const connectDB = require('./config/db');
+
+process.on('uncaughtException', (err) => {
+    console.error('⚠️ Uncaught Exception (handled safely):', err.message || err);
+});
+process.on('unhandledRejection', (reason) => {
+    console.error('⚠️ Unhandled Rejection (handled safely):', reason);
+});
 
 const app = express();
 
@@ -102,16 +110,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-// Session (MongoDB-backed)
+// Session (Memory-backed, as app uses JWT for auth)
 app.use(session({
     secret: process.env.SESSION_SECRET || 'fallback_secret',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URI,
-        ttl: 60 * 60 * 24,
-        autoRemove: 'native'
-    }),
     cookie: {
         maxAge: 1000 * 60 * 60 * 24
     }

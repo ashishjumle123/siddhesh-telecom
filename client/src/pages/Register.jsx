@@ -42,12 +42,15 @@ export default function Register() {
         }
 
         setLoading(true);
-        const success = await sendOtp(email);
+        const result = await sendOtp(email);
         setLoading(false);
 
-        if (success) {
+        if (result?.success || result === true) {
             setStep(2);
             setTimer(60); // 60 second lock out for resending
+            if (result?.devOtp) {
+                setOtp(result.devOtp);
+            }
         }
     };
 

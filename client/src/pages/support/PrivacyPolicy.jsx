@@ -7,7 +7,7 @@ export default function PrivacyPolicy() {
                 <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8 border-b pb-4">Privacy Policy</h1>
 
                 <div className="space-y-8 text-gray-700 leading-relaxed text-sm lg:text-base">
-                    <p>At Shree-Ganesha Enterprises, we value your trust and respect your privacy. This Privacy Policy details the information we collect, how it is handled, and the choices you have concerning your data.</p>
+                    <p>At Siddhesh Telecome Services, we value your trust and respect your privacy. This Privacy Policy details the information we collect, how it is handled, and the choices you have concerning your data.</p>
 
                     <section>
                         <h2 className="text-xl font-semibold text-gray-800 mb-3">Information We Collect</h2>

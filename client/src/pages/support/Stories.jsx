@@ -6,7 +6,7 @@ export default function Stories() {
         <div className="bg-[#f1f3f6] min-h-screen py-8 md:py-12">
             <div className="max-w-[1000px] mx-auto bg-white p-6 md:p-10 rounded-lg shadow-sm border border-gray-100">
                 <div className="text-center mb-12">
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2 border-b pb-4">Shree-Ganesha Stories</h1>
+                    <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2 border-b pb-4">Siddhesh Stories</h1>
                     <p className="text-gray-500 mt-4 max-w-2xl mx-auto italic">"Every great business begins with a simple, genuine intention to serve the community."</p>
                 </div>
 
@@ -18,7 +18,7 @@ export default function Stories() {
                         </div>
                         <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm">
                             <h3 className="font-bold text-gray-800 text-xl mb-2">Our Journey</h3>
-                            <p className="text-sm md:text-base">Shree-Ganesha Enterprises started with a humble yet powerful mission: to provide high-quality electronics and durable furniture products at affordable prices. We recognized the gap between premium retail pricing and what hard-working families could afford.</p>
+                            <p className="text-sm md:text-base">Siddhesh Telecome Services started with a humble yet powerful mission: to provide high-quality telecommunications products and services at affordable prices. We recognized the gap between premium retail pricing and what hard-working families could afford.</p>
                         </div>
                     </div>
 
@@ -48,7 +48,7 @@ export default function Stories() {
                         </div>
                         <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm">
                             <h3 className="font-bold text-gray-800 text-xl mb-2">Community Connection</h3>
-                            <p className="text-sm md:text-base">Our brand is deeply inspired by the blessings of Lord Ganesha, symbolizing prosperity, wisdom, and fresh beginnings. Every order we process is treated with that same respect, hoping to bring joy and utility into the homes of our community.</p>
+                            <p className="text-sm md:text-base">Our brand is deeply inspired by the commitment to serve our community with quality telecommunications services. Every order we process is treated with that same respect, hoping to bring joy and utility into the homes of our community.</p>
                         </div>
                     </div>
 

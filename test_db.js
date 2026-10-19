@@ -1,5 +1,8 @@
+const dns = require('dns');
+try { dns.setServers(['8.8.8.8', '1.1.1.1']); } catch (e) {}
+require('dotenv').config();
 const mongoose = require('mongoose');
-const uri = "mongodb+srv://aashishjumle03_db_user:a93Y3GPKK5UsQfUG@shree-ganesha-enterpris.jgnjkr8.mongodb.net/test?retryWrites=true&w=majority&appName=Shree-Ganesha-Enterprises";
+const uri = process.env.MONGO_URI || "mongodb+srv://siddheshtelecomdigital_db_user:67ZvqB5wrmGLMd0S@siddhesh.k7kbxem.mongodb.net/shree_ganesha?retryWrites=true&w=majority";
 
 mongoose.connect(uri)
     .then(() => {

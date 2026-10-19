@@ -89,6 +89,16 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 0
     }
-}, { timestamps: true });
+}, { 
+    timestamps: true,
+    indexes: [
+        { title: 'text', description: 'text' },
+        { category: 1 },
+        { brand: 1 },
+        { price: 1 },
+        { rating: -1 },
+        { createdAt: -1 }
+    ]
+});
 
 module.exports = mongoose.models.Product || mongoose.model('Product', productSchema);

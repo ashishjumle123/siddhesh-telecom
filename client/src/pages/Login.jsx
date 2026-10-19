@@ -15,6 +15,7 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
         const success = await login(email, password);
         if (success) {
             // Get fresh user from localStorage since login() just set it

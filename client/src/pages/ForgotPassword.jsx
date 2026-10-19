@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import BASE_URL from '../api';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, KeyRound } from 'lucide-react';
@@ -33,10 +33,13 @@ export default function ForgotPassword() {
         e.preventDefault();
         setLoading(true);
         try {
-            await axios.post(`${BASE_URL}/api/auth/forgot-password-otp`, { email });
-            toast.success('Password reset code sent to your email!');
+            const res = await axios.post(`${BASE_URL}/api/auth/forgot-password-otp`, { email });
+            toast.success(res.data?.message || 'Password reset code sent to your email!');
             setStep(2);
             setTimer(30);
+            if (res.data?.devOtp) {
+                setOtp(res.data.devOtp);
+            }
         } catch (err) {
             toast.error(err.response?.data?.message || 'Failed to send OTP. Account may not exist.');
         } finally {

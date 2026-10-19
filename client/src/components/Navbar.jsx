@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { Search, ShoppingCart, User, Layers, ChevronDown, Heart, Package, LogOut, Settings, Menu, X, Phone, Home as HomeIcon } from 'lucide-react';
-import ganeshaLogo from '../assets/ganesha-logo.png';
+import siddheshLogo from '../assets/siddhesh-telecom-logo.jpg';
 
 export default function Navbar() {
     const { totalItems } = useCart();
@@ -19,33 +19,6 @@ export default function Navbar() {
 
     const firstName = user?.name ? user.name.split(' ')[0] : '';
 
-    // Lordicon ref — safely mount web component after CDN loads
-    const lordIconRef = useRef(null);
-    useEffect(() => {
-        const container = lordIconRef.current;
-        if (!container || container.querySelector('lord-icon')) return;
-
-        const mountIcon = () => {
-            const icon = document.createElement('lord-icon');
-            icon.setAttribute('src', 'https://cdn.lordicon.com/lewtedlh.json');
-            icon.setAttribute('trigger', 'hover');
-            icon.setAttribute('stroke', 'light');
-            icon.setAttribute('state', 'hover-pinch');
-            icon.setAttribute('colors', 'primary:#ffffff,secondary:#c7d9ff');
-            icon.style.width = '38px';
-            icon.style.height = '38px';
-            icon.style.display = 'block';
-            container.appendChild(icon);
-        };
-
-        // Wait for lordicon custom element to be registered by the CDN
-        if (customElements.get('lord-icon')) {
-            mountIcon();
-        } else {
-            customElements.whenDefined('lord-icon').then(mountIcon);
-        }
-    }, []);
-
     const handleSearch = (e) => {
         e.preventDefault();
         if (keyword.trim()) {
@@ -57,21 +30,32 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="bg-[#2874f0] text-white p-3 shadow-md sticky top-0 z-50">
+        <nav className="bg-[#2874f0] text-white p-2.5 sm:p-3 shadow-md sticky top-0 z-50">
             {/* Desktop & Mobile Main Row */}
-            <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
 
                 {/* Mobile Menu Button & Brand */}
-                <div className="flex items-center gap-3">
-                    <button className="md:hidden p-1" onClick={() => setIsMobileMenuOpen(true)}>
+                <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                    <button className="md:hidden p-1 hover:bg-blue-600 rounded transition-colors" onClick={() => setIsMobileMenuOpen(true)} aria-label="Open navigation menu">
                         <Menu className="w-6 h-6 text-white" />
                     </button>
 
-                    <Link to="/" className="flex items-center gap-1.5 text-xl font-bold italic tracking-wide text-white">
-                        {/* Animated Lordicon shop icon - safely mounted via useEffect */}
-                        <span ref={lordIconRef} className="shrink-0 flex items-center" />
-                        <span className="hidden md:inline">Shree Ganesha Enterprises</span>
-                        <span className="md:hidden">SGE</span>
+                    <Link to="/" className="flex items-center gap-2 sm:gap-2.5 text-white hover:opacity-95 transition-opacity">
+                        {/* Siddhesh Telecom Services Logo */}
+                        <img
+                            src={siddheshLogo}
+                            alt="Siddhesh Telecom Services"
+                            className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-full object-cover shadow-sm ring-2 ring-white/40 shrink-0"
+                        />
+                        <div className="flex flex-col">
+                            <span className="font-bold text-sm sm:text-base md:text-lg lg:text-xl tracking-tight leading-tight whitespace-nowrap">
+                                <span className="hidden sm:inline">Siddhesh Telecom Services</span>
+                                <span className="sm:hidden">Siddhesh Telecom</span>
+                            </span>
+                            <span className="text-[10px] text-blue-100 hidden md:block italic tracking-wider leading-none">
+                                Jejuri • Purandhar
+                            </span>
+                        </div>
                     </Link>
                 </div>
 
@@ -113,63 +97,37 @@ export default function Navbar() {
                         <Layers className="w-4 h-4" /> Categories
                     </Link> */}
 
-                    {user ? (
-                        <div className="relative group cursor-pointer inline-block">
-                            <div className="flex items-center gap-2 hover:text-gray-200 transition-colors py-2">
-                                <span className="text-base">{firstName}</span>
-                                <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
-                            </div>
-
-                            {/* Dropdown Menu */}
-                            <div className="absolute top-full mt-0 right-1/2 translate-x-1/2 w-[240px] bg-white border border-gray-200 rounded-sm shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-gray-800">
-                                {/* Upward triangle arrow */}
-                                <div className="hidden md:block absolute -top-2 left-1/2 -translate-x-1/2 border-8 border-transparent border-b-white"></div>
-
-                                <div className="flex flex-col w-full text-sm font-normal">
-                                    <Link to="/profile" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 hover:text-[#2874f0] transition-colors">
-                                        <User className="w-4 h-4 text-[#2874f0]" />
-                                        <span>My Profile</span>
-                                    </Link>
-                                    <Link to="/my-orders" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 hover:text-[#2874f0] transition-colors border-t border-gray-100">
-                                        <Package className="w-4 h-4 text-[#2874f0]" />
-                                        <span>Orders</span>
-                                    </Link>
-                                    <Link to="/wishlist" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 hover:text-[#2874f0] transition-colors border-t border-gray-100">
-                                        <Heart className="w-4 h-4 text-[#2874f0]" />
-                                        <span>Wishlist</span>
-                                    </Link>
-                                    {user.role === 'admin' && (
-                                        <Link to="/admin" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 hover:text-[#2874f0] transition-colors border-t border-gray-100">
-                                            <Settings className="w-4 h-4 text-[#2874f0]" />
-                                            <span>Admin Panel</span>
-                                        </Link>
-                                    )}
-                                    <button onClick={logout} className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 hover:text-red-500 transition-colors border-t border-gray-100 w-full text-left">
-                                        <LogOut className="w-4 h-4 text-red-500" />
-                                        <span>Logout</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ) : (
-                        <Link to="/login" className="bg-white text-[#2874f0] px-8 py-1.5 rounded-sm font-bold hover:bg-gray-50 transition-colors shadow-sm">
-                            Login
-                        </Link>
-                    )}
+                    {/* WhatsApp Quick Link */}
+                    <a
+                        href="https://wa.me/919923777771?text=Hello%20Siddhesh%20Telecom%20Services,%20I%20have%20an%20inquiry."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 bg-[#25D366] text-white px-3.5 py-1.5 rounded-full font-bold hover:bg-[#20ba59] transition-colors shadow-xs"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 3.825 0 6.938 3.112 6.938 6.937 0 3.825-3.113 6.938-6.938 6.938z" />
+                        </svg>
+                        <span>WhatsApp</span>
+                    </a>
 
                     <Link to="/contact" className="hover:text-gray-200 transition-colors">
                         Contact Us
                     </Link>
 
-                    <Link to="/cart" className="flex items-center gap-2 hover:text-gray-200 transition-colors relative">
-                        <ShoppingCart className="w-5 h-5" />
-                        <span>Cart</span>
-                        {totalItems > 0 && (
-                            <span className="absolute -top-2 left-3 bg-[#ff6161] text-xs w-4 h-4 flex items-center justify-center rounded-full text-white font-bold border border-[#2874f0]">
-                                {totalItems}
-                            </span>
-                        )}
-                    </Link>
+                    {user?.role === 'admin' ? (
+                        <div className="flex items-center gap-3">
+                            <Link to="/admin" className="bg-white text-[#2874f0] px-4 py-1.5 rounded-sm font-bold hover:bg-gray-50 transition-colors shadow-sm flex items-center gap-1.5">
+                                <Settings className="w-4 h-4" /> Admin Panel
+                            </Link>
+                            <button onClick={logout} className="text-white hover:text-red-200 text-xs font-semibold cursor-pointer">
+                                Logout
+                            </button>
+                        </div>
+                    ) : (
+                        <Link to="/admin" className="text-white/80 hover:text-white text-xs border border-white/30 px-3 py-1 rounded-sm hover:border-white transition-colors">
+                            Admin Login
+                        </Link>
+                    )}
                 </div>
             </div>
 
@@ -213,10 +171,15 @@ export default function Navbar() {
                                 </div>
                             ) : (
                                 <div className="flex items-center gap-3">
-                                    <User className="w-8 h-8" />
-                                    <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="font-semibold text-lg hover:underline">
-                                        Login & Signup
-                                    </Link>
+                                    <img
+                                        src={siddheshLogo}
+                                        alt="Siddhesh Telecom"
+                                        className="w-10 h-10 rounded-full object-cover ring-2 ring-white/50 shadow-sm shrink-0"
+                                    />
+                                    <div>
+                                        <p className="font-semibold text-sm">Siddhesh Telecom</p>
+                                        <p className="text-xs text-blue-100">Catalog & Inquiries</p>
+                                    </div>
                                 </div>
                             )}
                             <button onClick={() => setIsMobileMenuOpen(false)} className="p-1">
@@ -230,51 +193,49 @@ export default function Navbar() {
                                 <HomeIcon className="w-5 h-5 text-gray-500" />
                                 <span>Home</span>
                             </Link>
-                            <Link to="/category/tv" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-4 px-4 py-3 hover:bg-gray-50">
-                                <Layers className="w-5 h-5 text-gray-500" />
-                                <span>Categories</span>
-                            </Link>
-
-                            <hr className="my-2 border-gray-100" />
-
-                            {user && (
-                                <>
-                                    <Link to="/my-orders" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-4 px-4 py-3 hover:bg-gray-50">
-                                        <Package className="w-5 h-5 text-gray-500" />
-                                        <span>Orders</span>
-                                    </Link>
-                                    <Link to="/wishlist" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-4 px-4 py-3 hover:bg-gray-50">
-                                        <Heart className="w-5 h-5 text-gray-500" />
-                                        <span>Wishlist</span>
-                                    </Link>
-                                    <Link to="/profile" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-4 px-4 py-3 hover:bg-gray-50">
-                                        <User className="w-5 h-5 text-gray-500" />
-                                        <span>Profile</span>
-                                    </Link>
-
-                                    <hr className="my-2 border-gray-100" />
-                                </>
-                            )}
+                            
+                            <a 
+                                href="https://wa.me/919923777771?text=Hello%20Siddhesh%20Telecom%20Services,%20I%20have%20an%20inquiry."
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={() => setIsMobileMenuOpen(false)} 
+                                className="flex items-center gap-4 px-4 py-3 text-emerald-600 hover:bg-emerald-50 font-medium"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 3.825 0 6.938 3.112 6.938 6.937 0 3.825-3.113 6.938-6.938 6.938z" />
+                                </svg>
+                                <span>WhatsApp Inquiry</span>
+                            </a>
 
                             <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-4 px-4 py-3 hover:bg-gray-50">
                                 <Phone className="w-5 h-5 text-gray-500" />
                                 <span>Contact Us</span>
                             </Link>
 
-                            {user && (
+                            <hr className="my-2 border-gray-100" />
+
+                            {user?.role === 'admin' ? (
                                 <>
-                                    <hr className="my-2 border-gray-100" />
+                                    <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-4 px-4 py-3 hover:bg-blue-50 text-[#2874f0] font-semibold">
+                                        <Settings className="w-5 h-5 text-[#2874f0]" />
+                                        <span>Admin Panel</span>
+                                    </Link>
                                     <button
                                         onClick={() => {
                                             logout();
                                             setIsMobileMenuOpen(false);
                                         }}
-                                        className="w-full flex items-center gap-4 px-4 py-3 hover:bg-red-50 text-red-600"
+                                        className="w-full flex items-center gap-4 px-4 py-3 hover:bg-red-50 text-red-600 font-medium"
                                     >
                                         <LogOut className="w-5 h-5" />
                                         <span>Logout</span>
                                     </button>
                                 </>
+                            ) : (
+                                <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-4 px-4 py-3 hover:bg-gray-50 text-gray-600 text-sm">
+                                    <Settings className="w-5 h-5 text-gray-400" />
+                                    <span>Admin Login</span>
+                                </Link>
                             )}
                         </div>
                     </div>

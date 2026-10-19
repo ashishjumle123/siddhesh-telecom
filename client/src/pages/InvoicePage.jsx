@@ -88,7 +88,7 @@ export default function InvoicePage() {
 
         // ── Header ────────────────────────────────────────────────────────────
         doc.setFontSize(20); doc.setFont('helvetica', 'bold'); doc.setTextColor(180, 60, 0);
-        doc.text('Shree-Ganesha Enterprises', pageW / 2, y, { align: 'center' });
+        doc.text('Siddhesh Telecome Services', pageW / 2, y, { align: 'center' });
 
         y += 7; doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(60, 60, 60);
         doc.text('Cash Memo / Tax Invoice', pageW / 2, y, { align: 'center' });
@@ -96,9 +96,9 @@ export default function InvoicePage() {
         y += 5; doc.setFontSize(8.5); doc.setFont('helvetica', 'normal'); doc.setTextColor(80, 80, 80);
         doc.text('GST No: 27AUCPV6162E1ZG', pageW / 2, y, { align: 'center' });
 
-        y += 5; doc.text('Bus Stop, Bazar Road, Mandhal, Ta. Kuhi, Dist. Nagpur', pageW / 2, y, { align: 'center' });
-        y += 4; doc.text('Ph: 9766009758 / 9511802794', pageW / 2, y, { align: 'center' });
-        y += 4; doc.text('Authorized Dealer: Cooler, Fridge, Washing Machine, Furniture & Electronics', pageW / 2, y, { align: 'center' });
+        y += 5; doc.text('Lavthalswar, Oppo. Anandi Hospital, Jejuri, Tal-Purandhar, Dist-Pune', pageW / 2, y, { align: 'center' });
+        y += 4; doc.text('Ph: 9822521992 / 9923777771', pageW / 2, y, { align: 'center' });
+        y += 4; doc.text('Owner: Mahesh Mhetre', pageW / 2, y, { align: 'center' });
 
         y += 3; doc.setDrawColor(180, 60, 0); doc.setLineWidth(0.6); doc.line(14, y, pageW - 14, y);
 
@@ -177,7 +177,7 @@ export default function InvoicePage() {
         doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(60);
         doc.text('Customer Signature', 20, sY + 12); doc.line(14, sY + 14, 72, sY + 14);
         doc.setFont('helvetica', 'bold'); doc.setTextColor(0);
-        doc.text('For: Shree Ganesha Enterprises', rX, sY + 10, { align: 'right' });
+        doc.text('For: Siddhesh Telecome Services', rX, sY + 10, { align: 'right' });
         doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(80);
         doc.text('Authorized Signatory', rX, sY + 15, { align: 'right' });
         doc.line(rX - 55, sY + 17, rX, sY + 17);
@@ -272,16 +272,16 @@ export default function InvoicePage() {
                             {/* Left: Store info */}
                             <div className="flex-1">
                                 <h1 className="text-2xl font-extrabold text-orange-700 leading-tight tracking-tight">
-                                    Shree-Ganesha Enterprises
+                                    Siddhesh Telecome Services
                                 </h1>
                                 <p className="text-sm font-semibold text-gray-600 mt-0.5">Cash Memo / Tax Invoice</p>
                                 <p className="text-xs text-gray-500 mt-1.5 font-medium">GST No: <span className="font-bold text-gray-700">27AUCPV6162E1ZG</span></p>
                                 <div className="mt-2 text-xs text-gray-600 space-y-0.5 leading-relaxed">
-                                    <p>Bus Stop, Bazar Road</p>
-                                    <p>Mandhal, Ta. Kuhi, Dist. Nagpur</p>
+                                    <p>Lavthalswar, Oppo. Anandi Hospital</p>
+                                    <p>Jejuri, Tal-Purandhar, Dist-Pune</p>
                                 </div>
                                 <p className="text-xs text-gray-500 mt-2 italic">
-                                    Authorized Dealer: Cooler, Fridge, Washing Machine,<br />Furniture &amp; Electronics
+                                    Owner: Mahesh Mhetre<br />Telecome Services
                                 </p>
                             </div>
 
@@ -315,7 +315,7 @@ export default function InvoicePage() {
                         {/* Phone */}
                         <div className="mt-3 pt-3 border-t border-orange-100">
                             <p className="text-xs text-gray-500">
-                                📞 <span className="font-semibold text-gray-700">9766009758 / 9511802794</span>
+                                📞 <span className="font-semibold text-gray-700">9822521992 / 9923777771</span>
                             </p>
                         </div>
                     </div>
@@ -486,7 +486,7 @@ export default function InvoicePage() {
                                 </div>
                             </div>
                             <div className="border-t border-gray-400 mt-2 pt-2">
-                                <p className="text-xs font-bold text-gray-800">For: Shree Ganesha Enterprises</p>
+                                <p className="text-xs font-bold text-gray-800">For: Siddhesh Telecome Services</p>
                                 <p className="text-xs text-gray-500 mt-0.5">Authorized Signatory</p>
                             </div>
                         </div>
@@ -495,7 +495,7 @@ export default function InvoicePage() {
                     {/* ═══ FOOTER ══════════════════════════════════════════════ */}
                     <div className="bg-orange-700 text-white text-center py-3 px-8">
                         <p className="text-xs font-medium">
-                            Thank you for shopping with <strong>Shree-Ganesha Enterprises</strong>!
+                            Thank you for shopping with <strong>Siddhesh Telecome Services</strong>!
                         </p>
                         <p className="text-xs text-orange-200 mt-0.5">
                             This is a computer-generated invoice and does not require a physical signature.

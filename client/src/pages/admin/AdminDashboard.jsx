@@ -149,7 +149,7 @@ function OverviewDashboard({ onViewOrder }) {
 }
 
 export default function AdminDashboard() {
-    const [activeTab, setActiveTab] = useState('overview');
+    const [activeTab, setActiveTab] = useState('products');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [viewingOrderId, setViewingOrderId] = useState(null);
 
@@ -167,10 +167,10 @@ export default function AdminDashboard() {
     };
 
     const navItems = [
-        { id: 'overview', label: 'Dashboard Overview', icon: LayoutDashboard },
-        { id: 'orders', label: 'Manage Orders', icon: ShoppingBag },
-        { id: 'categories', label: 'Manage Categories', icon: Layers },
         { id: 'products', label: 'Manage Products', icon: Package },
+        { id: 'categories', label: 'Manage Categories', icon: Layers },
+        { id: 'overview', label: 'Store Overview', icon: LayoutDashboard },
+        { id: 'orders', label: 'Customer Orders', icon: ShoppingBag },
     ];
 
     const tabTitle = activeTab === 'order-detail' ? 'Order Details'
@@ -178,12 +178,12 @@ export default function AdminDashboard() {
 
     const renderContent = () => {
         switch (activeTab) {
-            case 'products': return <ManageProducts />;
             case 'categories': return <ManageCategories />;
             case 'orders': return <ManageOrders onViewOrder={handleViewOrder} />;
             case 'order-detail': return <AdminOrderDetail orderId={viewingOrderId} onBack={handleBackFromDetail} />;
-            case 'overview':
-            default: return <OverviewDashboard onViewOrder={handleViewOrder} />;
+            case 'overview': return <OverviewDashboard onViewOrder={handleViewOrder} />;
+            case 'products':
+            default: return <ManageProducts />;
         }
     };
 
@@ -199,7 +199,7 @@ export default function AdminDashboard() {
                 <div className="p-6 border-b flex justify-between items-center bg-gradient-to-r from-[#2874f0] to-[#1458c8]">
                     <div>
                         <h2 className="text-lg font-bold text-white">Admin Panel</h2>
-                        <p className="text-xs text-blue-200 mt-0.5">Shree-Ganesha</p>
+                        <p className="text-xs text-blue-200 mt-0.5">Siddhesh Telecom Digital</p>
                     </div>
                     <button className="md:hidden text-white/80 hover:text-white" onClick={toggleSidebar}>
                         <X className="w-6 h-6" />
@@ -224,7 +224,7 @@ export default function AdminDashboard() {
                 </nav>
 
                 <div className="p-4 border-t border-gray-100">
-                    <p className="text-xs text-gray-400 text-center">Shree-Ganesha Enterprises © 2024</p>
+                    <p className="text-xs text-gray-400 text-center">Siddhesh Telecom Digital</p>
                 </div>
             </aside>
 

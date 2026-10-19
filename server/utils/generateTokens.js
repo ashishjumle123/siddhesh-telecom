@@ -1,18 +1,21 @@
 const jwt = require('jsonwebtoken');
 
 const generateTokens = (userId, role) => {
-    // Generate Access Token (expires in 15 minutes)
+    const secret = process.env.ACCESS_TOKEN_SECRET || process.env.JWT_SECRET || 'fallback_access_secret';
+    const refreshSecret = process.env.REFRESH_TOKEN_SECRET || process.env.JWT_SECRET || 'fallback_refresh_secret';
+
+    // Generate Access Token (expires in 7 days for seamless session persistence)
     const accessToken = jwt.sign(
         { id: userId, role },
-        process.env.ACCESS_TOKEN_SECRET || 'fallback_access_secret',
-        { expiresIn: '15m' }
+        secret,
+        { expiresIn: '7d' }
     );
 
-    // Generate Refresh Token (expires in 7 days)
+    // Generate Refresh Token (expires in 30 days)
     const refreshToken = jwt.sign(
         { id: userId, role },
-        process.env.REFRESH_TOKEN_SECRET || 'fallback_refresh_secret',
-        { expiresIn: '7d' }
+        refreshSecret,
+        { expiresIn: '30d' }
     );
 
     return { accessToken, refreshToken };

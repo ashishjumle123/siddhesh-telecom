@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import BASE_URL from '../api';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { Star, ShoppingCart, Zap, Tag, ShieldCheck, Trash2 } from 'lucide-react';
+import { Star, ShoppingCart, Zap, Tag, ShieldCheck, Trash2, Phone } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
@@ -88,6 +88,28 @@ export default function ProductDetails() {
         checkReviewEligibility();
     }, [id, navigate, user, token, reviewRefreshTrigger, productRefreshTrigger]);
 
+    const handleWhatsAppEnquiry = () => {
+        if (!product) return;
+        const phone = '919923777771';
+        const pageUrl = window.location.href;
+        const message = `Hello Siddhesh Telecom Services,
+
+I am interested in this product:
+*${product.title}*
+Price: ₹${product.price?.toLocaleString('en-IN') || ''}
+
+Product Link: ${pageUrl}
+
+Please share more details and availability. Thank you!`;
+
+        const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+        window.open(waUrl, '_blank', 'noopener,noreferrer');
+    };
+
+    const handleCallNow = () => {
+        window.location.href = 'tel:+919923777771';
+    };
+
     const handleAddToCart = () => {
         if (!user) {
             toast.error('Please login to add items to your cart');
@@ -160,6 +182,10 @@ export default function ProductDetails() {
                             src={product.images && product.images[activeImage] ? product.images[activeImage] : 'https://via.placeholder.com/400'}
                             alt={`${product.title} - View ${activeImage + 1}`}
                             loading="lazy"
+                            decoding="async"
+                            onError={(e) => {
+                                e.target.src = 'https://via.placeholder.com/400?text=Image+Not+Available';
+                            }}
                             className="max-h-full max-w-full object-contain mix-blend-multiply transition-transform duration-500 transform group-hover:scale-125"
                         />
                         <div className="absolute top-3 right-3 bg-white/80 backdrop-blur rounded-full p-2 shadow z-10 text-gray-400 hover:text-red-500 cursor-pointer transition-colors">
@@ -179,48 +205,60 @@ export default function ProductDetails() {
                                     className={`relative w-16 h-16 md:w-20 md:h-20 shrink-0 border-2 rounded-lg p-1 overflow-hidden transition-all snap-start shadow-sm
                                         ${activeImage === index ? 'border-blue-600 ring-1 ring-blue-600 ring-offset-1' : 'border-gray-200 hover:border-blue-400 opacity-70 hover:opacity-100'}`}
                                 >
-                                    <img src={img} alt={`Thumbnail ${index + 1}`} loading="lazy" className="w-full h-full object-contain mix-blend-multiply" />
+                                    <img 
+                                        src={img} 
+                                        alt={`Thumbnail ${index + 1}`} 
+                                        loading="lazy" 
+                                        decoding="async"
+                                        onError={(e) => {
+                                            e.target.src = 'https://via.placeholder.com/100?text=No+Img';
+                                        }}
+                                        className="w-full h-full object-contain mix-blend-multiply" 
+                                    />
                                 </button>
                             ))}
                         </div>
                     )}
 
                     {/* Desktop Action Buttons */}
-                    <div className="hidden md:flex gap-4 mt-auto pt-2 shrink-0">
-                        {user?.role === 'admin' ? (
-                            <>
+                    <div className="hidden md:flex flex-col gap-3 mt-auto pt-4 shrink-0">
+                        {user?.role === 'admin' && (
+                            <div className="flex gap-3">
                                 <button
                                     onClick={handleEditProduct}
-                                    className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded shadow text-lg flex items-center justify-center gap-2 transition transform active:scale-95"
+                                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-3 rounded-xl shadow text-sm flex items-center justify-center gap-1.5 transition active:scale-95 cursor-pointer"
                                 >
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                     </svg> EDIT PRODUCT
                                 </button>
                                 <button
                                     onClick={handleDeleteProduct}
-                                    className="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded shadow text-lg flex items-center justify-center gap-2 transition transform active:scale-95"
+                                    className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-3 rounded-xl shadow text-sm flex items-center justify-center gap-1.5 transition active:scale-95 cursor-pointer"
                                 >
-                                    <Trash2 className="w-5 h-5" /> DELETE PRODUCT
+                                    <Trash2 className="w-4 h-4" /> DELETE PRODUCT
                                 </button>
-                            </>
-                        ) : (
-                            <>
-                                <button
-                                    onClick={handleAddToCart}
-                                    className="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-4 rounded shadow text-lg flex items-center justify-center gap-2 transition transform active:scale-95"
-                                >
-                                    <ShoppingCart className="w-5 h-5" /> {user ? 'ADD TO CART' : 'LOGIN TO BUY'}
-                                </button>
-                                <button
-                                    onClick={handleBuyNow}
-                                    disabled={true}
-                                    className="flex-1 bg-gray-400 cursor-not-allowed text-white font-bold py-3 px-4 rounded shadow text-lg flex items-center justify-center gap-2 transition"
-                                >
-                                    <ShieldCheck className="w-5 h-5" /> BUY NOW (LOCKED)
-                                </button>
-                            </>
+                            </div>
                         )}
+
+                        <div className="flex gap-3">
+                            <button
+                                onClick={handleWhatsAppEnquiry}
+                                className="flex-1 bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-white font-bold py-3.5 px-4 rounded-xl shadow-md text-base flex items-center justify-center gap-2.5 transition cursor-pointer"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 3.825 0 6.938 3.112 6.938 6.937 0 3.825-3.113 6.938-6.938 6.938z" />
+                                </svg>
+                                <span>ENQUIRE ON WHATSAPP</span>
+                            </button>
+                            <button
+                                onClick={handleCallNow}
+                                className="bg-[#2874f0] hover:bg-blue-600 active:scale-[0.98] text-white font-bold py-3.5 px-6 rounded-xl shadow-md text-base flex items-center justify-center gap-2 transition cursor-pointer"
+                            >
+                                <Phone className="w-5 h-5" />
+                                <span>CALL NOW</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -423,39 +461,39 @@ export default function ProductDetails() {
             )}
 
             {/* Mobile Fixed Action Buttons */}
-            <div className="fixed bottom-[60px] left-0 right-0 md:hidden flex bg-white border-t border-gray-200 z-50">
-                {user?.role === 'admin' ? (
+            <div className="fixed bottom-[60px] left-0 right-0 md:hidden flex bg-white border-t border-gray-200 p-2 gap-2 z-50 shadow-lg">
+                {user?.role === 'admin' && (
                     <>
                         <button
                             onClick={handleEditProduct}
-                            className="flex-1 bg-white text-gray-800 font-bold py-3.5 px-2 flex items-center justify-center gap-1 border-r border-gray-200"
+                            className="bg-blue-600 text-white font-bold py-2.5 px-3 rounded-lg text-xs flex items-center justify-center shrink-0"
                         >
-                            EDIT PRODUCT
+                            EDIT
                         </button>
                         <button
                             onClick={handleDeleteProduct}
-                            className="flex-1 bg-red-500 text-white font-bold py-3.5 px-2 flex items-center justify-center gap-1"
+                            className="bg-red-600 text-white font-bold py-2.5 px-3 rounded-lg text-xs flex items-center justify-center shrink-0"
                         >
-                            <Trash2 className="w-5 h-5" /> DELETE
-                        </button>
-                    </>
-                ) : (
-                    <>
-                        <button
-                            onClick={handleAddToCart}
-                            className="flex-1 bg-white text-gray-800 font-bold py-3.5 px-2 flex items-center justify-center gap-1 border-r border-gray-200"
-                        >
-                            {user ? 'ADD TO CART' : 'LOGIN TO BUY'}
-                        </button>
-                        <button
-                            onClick={handleBuyNow}
-                            disabled={true}
-                            className="flex-1 bg-gray-400 text-white font-bold py-3.5 px-2 flex items-center justify-center gap-1 cursor-not-allowed"
-                        >
-                            <ShieldCheck className="w-5 h-5" /> BUY NOW (LOCKED)
+                            <Trash2 className="w-3.5 h-3.5" />
                         </button>
                     </>
                 )}
+                <button
+                    onClick={handleWhatsAppEnquiry}
+                    className="flex-1 bg-[#25D366] text-white font-bold py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 text-xs shadow"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 3.825 0 6.938 3.112 6.938 6.937 0 3.825-3.113 6.938-6.938 6.938z" />
+                    </svg>
+                    <span>WHATSAPP</span>
+                </button>
+                <button
+                    onClick={handleCallNow}
+                    className="bg-[#2874f0] text-white font-bold py-2.5 px-4 rounded-lg flex items-center justify-center gap-1 text-xs shadow shrink-0"
+                >
+                    <Phone className="w-3.5 h-3.5" />
+                    <span>CALL</span>
+                </button>
             </div>
 
             <EditProductModal 

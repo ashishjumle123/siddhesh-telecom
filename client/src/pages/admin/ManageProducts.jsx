@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import BASE_URL from '../../api';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -20,10 +20,14 @@ const REPLACEMENT_OPTIONS = [
     '10 Days Replacement'
 ];
 
+let cachedProducts = null;
+let cachedCategories = null;
+
 export default function ManageProducts() {
     const { token } = useAuth();
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [products, setProducts] = useState(() => cachedProducts || []);
+    const [categories, setCategories] = useState(() => cachedCategories || []);
+    const [loading, setLoading] = useState(() => !cachedProducts);
     const [showForm, setShowForm] = useState(false);
     const [editingId, setEditingId] = useState(null);
 
@@ -44,32 +48,49 @@ export default function ManageProducts() {
     const [uploading, setUploading] = useState(false);
     const [specifications, setSpecifications] = useState([{ title: '', value: '' }]);
 
-    const [categories, setCategories] = useState([]);
-
     useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const { data } = await axios.get(`${BASE_URL}/api/categories`);
-                setCategories(data);
-                if (data.length > 0 && !editingId) {
-                    setFormData(prev => ({ ...prev, category: data[0].name }));
-                }
-            } catch (error) {
-                console.error('Error fetching categories:', error);
-            }
-        };
-        fetchCategories();
-        fetchProducts();
+        loadData();
     }, []);
+
+    const loadData = async () => {
+        try {
+            const [prodRes, catRes] = await Promise.allSettled([
+                axios.get(`${BASE_URL}/api/products?limit=100`),
+                axios.get(`${BASE_URL}/api/categories`)
+            ]);
+
+            if (prodRes.status === 'fulfilled') {
+                const prodData = prodRes.value.data.products || prodRes.value.data || [];
+                cachedProducts = prodData;
+                setProducts(prodData);
+            }
+
+            if (catRes.status === 'fulfilled') {
+                const catData = Array.isArray(catRes.value.data) ? catRes.value.data : catRes.value.data?.categories || [];
+                if (catData.length > 0) {
+                    cachedCategories = catData;
+                    setCategories(catData);
+                    if (!editingId && catData[0]?.name) {
+                        setFormData(prev => ({ ...prev, category: catData[0].name }));
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Data load error:', error);
+            if (!cachedProducts) toast.error('Failed to load products');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const fetchProducts = async () => {
         try {
-            const { data } = await axios.get(`${BASE_URL}/api/products`);
-            setProducts(data.products || data);
+            const { data } = await axios.get(`${BASE_URL}/api/products?limit=100`);
+            const prodData = data.products || data || [];
+            cachedProducts = prodData;
+            setProducts(prodData);
         } catch (error) {
-            toast.error('Failed to load products');
-        } finally {
-            setLoading(false);
+            toast.error('Failed to refresh products');
         }
     };
 
@@ -202,7 +223,13 @@ export default function ManageProducts() {
             resetForm();
             fetchProducts();
         } catch (error) {
-            toast.error(error.response?.data?.message || 'Operation failed');
+            const serverErrors = error.response?.data?.errors;
+            if (Array.isArray(serverErrors) && serverErrors.length > 0) {
+                // Show each field validation error from server (Zod)
+                serverErrors.forEach(err => toast.error(`${err.field ? err.field + ': ' : ''}${err.message}`));
+            } else {
+                toast.error(error.response?.data?.message || 'Operation failed');
+            }
         }
     };
 

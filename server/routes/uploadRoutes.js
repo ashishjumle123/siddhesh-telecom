@@ -28,7 +28,7 @@ router.post('/', protect, adminOnly, upload.array('images', 10), async (req, res
             return new Promise((resolve, reject) => {
                 const uploadStream = cloudinary.uploader.upload_stream(
                     {
-                        folder: 'shreeganesha/products',
+                        folder: 'siddheshtelecome/products',
                         resource_type: 'auto',
                         transformation: [
                             { quality: 'auto', fetch_format: 'auto' }
