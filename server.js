@@ -120,6 +120,23 @@ app.use(session({
     }
 }));
 
+// ─── Ensure DB Connection for Serverless (Vercel) ──────────────────────────────
+app.use(async (req, res, next) => {
+    if (req.path.startsWith('/api')) {
+        try {
+            await connectDB();
+        } catch (dbErr) {
+            console.error('Database connection middleware error:', dbErr.message);
+            return res.status(500).json({
+                success: false,
+                message: 'Database connection failed. Check MongoDB Atlas IP Whitelist (add 0.0.0.0/0) and Vercel Environment Variables.',
+                error: dbErr.message
+            });
+        }
+    }
+    next();
+});
+
 // ─── API Routes ────────────────────────────────────────────────────────────────
 app.use('/api/auth', require('./server/routes/authRoutes'));
 app.use('/api/users', require('./server/routes/userRoutes'));

@@ -34,49 +34,45 @@ const getTip = (message = '') => {
     return '👉 Check that your MONGO_URI is correct and Atlas cluster is active.';
 };
 
+let cachedConn = null;
+let cachedPromise = null;
+
 // ─── Core Connect Function ─────────────────────────────────────────────────
 const connectDB = async () => {
     // 0: disconnected, 1: connected, 2: connecting, 3: disconnecting
     if (mongoose.connection.readyState >= 1) {
-        console.log('ℹ️  Using existing MongoDB connection.');
         return mongoose.connection;
     }
 
-    if (isConnecting) return;
-    isConnecting = true;
-
     if (!MONGO_URI) {
         console.error('❌ FATAL: MONGO_URI is not defined in environment variables.');
-        isConnecting = false;
-        // In production, we don't process.exit(1) here to allow the server to boot
-        // and respond to health checks, even if it can't talk to DB yet.
-        return;
+        throw new Error('MONGO_URI is missing from environment variables. Please configure it in your Vercel Project Settings.');
+    }
+
+    if (!cachedPromise) {
+        console.log(`🔄 Attempting MongoDB connection... (attempt ${retryCount + 1})`);
+        cachedPromise = mongoose.connect(MONGO_URI, MONGO_OPTIONS)
+            .then((m) => {
+                retryCount = 0;
+                console.log(`✅ MongoDB Atlas Connected: ${m.connection.host}`);
+                return m;
+            })
+            .catch((err) => {
+                cachedPromise = null;
+                retryCount++;
+                console.error(`❌ MongoDB Connection Error! (attempt ${retryCount}/${MAX_RETRIES})`);
+                console.error(`   Reason : ${err.message}`);
+                console.error(`   Tip    : ${getTip(err.message)}`);
+                throw err;
+            });
     }
 
     try {
-        console.log(`🔄 Attempting MongoDB connection... (attempt ${retryCount + 1})`);
-        const conn = await mongoose.connect(MONGO_URI, MONGO_OPTIONS);
-
-        retryCount = 0;
-        isConnecting = false;
-
-        console.log(`✅ MongoDB Atlas Connected: ${conn.connection.host}`);
-        return conn;
-
+        cachedConn = await cachedPromise;
+        return cachedConn;
     } catch (error) {
-        isConnecting = false;
-        retryCount++;
-
-        console.error(`❌ MongoDB Connection Error! (attempt ${retryCount}/${MAX_RETRIES})`);
-        console.error(`   Reason : ${error.message}`);
-        console.error(`   Tip    : ${getTip(error.message)}`);
-
-        if (retryCount < MAX_RETRIES) {
-            console.log(`⏳ Retrying in ${RETRY_DELAY / 1000}s...`);
-            setTimeout(connectDB, RETRY_DELAY);
-        } else {
-            console.error('🚨 Max retry attempts reached. Please check your DB configuration.');
-        }
+        cachedPromise = null;
+        throw error;
     }
 };
 
