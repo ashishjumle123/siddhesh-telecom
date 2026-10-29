@@ -86,8 +86,9 @@ const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:3000',
     'https://shree-ganesha.onrender.com',           // Existing Render URL
-    'https://shree-ganesha-enterprises.vercel.app', // User's Vercel deployment URL
-    'https://shree-ganesha-enterprises.vercel.app/'  // Including trailing slash variant if needed
+    'https://shree-ganesha-enterprises.vercel.app', // Old Vercel deployment URL
+    'https://siddhesh-telecom.vercel.app',          // Live Vercel deployment URL
+    'https://siddhesh-telecom.vercel.app/'          // Including trailing slash variant if needed
 ].filter(Boolean);
 
 app.use(cors({
