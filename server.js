@@ -138,6 +138,21 @@ app.use(async (req, res, next) => {
     next();
 });
 
+// ─── Health Check / Diagnostic Route ──────────────────────────────────────────
+app.get('/api/test', (req, res) => {
+    const mongoose = require('mongoose');
+    res.json({
+        success: true,
+        message: 'API is working!',
+        dbState: mongoose.connection.readyState, // 0=disconnected,1=connected,2=connecting
+        mongoUri: process.env.MONGO_URI ? 'SET ✅' : 'MISSING ❌',
+        jwtSecret: process.env.JWT_SECRET ? 'SET ✅' : 'MISSING ❌',
+        nodeEnv: process.env.NODE_ENV || 'not set',
+        vercel: process.env.VERCEL || 'not vercel',
+        timestamp: new Date().toISOString()
+    });
+});
+
 // ─── API Routes ────────────────────────────────────────────────────────────────
 app.use('/api/auth', require('./server/routes/authRoutes'));
 app.use('/api/users', require('./server/routes/userRoutes'));
